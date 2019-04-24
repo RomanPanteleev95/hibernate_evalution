@@ -6,7 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="hibernate_evalution" />
+        <module name="hibirnate" />
+        <module name="hibirnate_to_repository" />
+        <module name="security" />
       </profile>
     </annotationProcessing>
   </component>
