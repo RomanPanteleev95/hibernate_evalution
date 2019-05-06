@@ -7,16 +7,17 @@ create table user_role (
 )
 
 insert into users (ID, USERNAME, PASSWORD)
-values (2, 'dbuser1', '$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu');
+values (1, 'Roman', '$2a$10$QfqlwPrt5uBqelZOo7YdCuN.qUms80Y3EED9HkaHPriZFS.X.r4w6');
 
 insert into users (ID, USERNAME, PASSWORD)
-values (3, 'dbadmin1', '$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu');
+values (2, 'RomanAdmin', '$2a$10$pxD.jECDnM70PFdgLE7ks.ZG5NeZlKtBsf8whL5MfJYxpFKY7CPVa');
+
 
 insert into user_role (ID, USER_ID, ROLE_ID)
-values (1, 2, 1);
+values (1, 1, 1);
 
 insert into user_role (ID, USER_ID, ROLE_ID)
-values (2, 3, 1);
+values (2, 2, 1);
 
 insert into user_role (ID, USER_ID, ROLE_ID)
-values (3, 3, 2);
+values (3, 2, 2);
