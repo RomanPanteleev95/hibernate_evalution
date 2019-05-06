@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserDao extends JpaRepository<User, Long> {
 
-    @Query("select u from users u where u.username = :userName")
+    @Query("select u from User u where u.userName = :userName")
     User findByUserName(@Param("userName") String userName);
 }

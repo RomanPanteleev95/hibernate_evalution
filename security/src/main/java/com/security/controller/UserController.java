@@ -1,32 +1,83 @@
 package com.security.controller;
 
 import com.security.model.User;
-import com.security.service.SecurityService;
-import com.security.service.UserService;
-import com.security.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.security.Principal;
+
 @Controller
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    private UserValidator userValidator;
-
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration(Model model) {
-        model.addAttribute("userFrom", new User());
-
-        return "registration";
+    @GetMapping(value = { "/", "/welcome" })
+    public String welcomePage(Model model) {
+        model.addAttribute("title", "Welcome");
+        model.addAttribute("message", "This is welcome page!");
+        return "welcomePage";
     }
+
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String adminPage(Model model, Principal principal) {
+
+        org.springframework.security.core.userdetails.User loginedUser =
+                (org.springframework.security.core.userdetails.User) ((Authentication) principal).getPrincipal();
+
+        model.addAttribute("userInfo", loginedUser.getUsername());
+
+        return "adminPage";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginPage(Model model) {
+        return "loginPage";
+    }
+
+    @RequestMapping(value = "/logoutSuccessful", method = RequestMethod.GET)
+    public String logoutSuccessfulPage(Model model) {
+        model.addAttribute("title", "Logout");
+        return "logoutSuccessfulPage";
+    }
+
+    @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
+    public String userInfo(Model model, Principal principal) {
+
+        // (1) (en)
+        // After user login successfully.
+        // (vi)
+        // Sau khi user login thanh cong se co principal
+        String userName = principal.getName();
+
+        System.out.println("User Name: " + userName);
+
+        org.springframework.security.core.userdetails.User loginedUser =
+                (org.springframework.security.core.userdetails.User) ((Authentication) principal).getPrincipal();
+
+        model.addAttribute("userInfo", loginedUser.getUsername());
+
+        return "userInfoPage";
+    }
+
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String accessDenied(Model model, Principal principal) {
+
+        if (principal != null) {
+            org.springframework.security.core.userdetails.User loginedUser =
+                    (org.springframework.security.core.userdetails.User) ((Authentication) principal).getPrincipal();
+
+            model.addAttribute("userInfo", loginedUser.getUsername());
+
+            String message = "Hi " + principal.getName() //
+                    + "<br> You do not have permission to access this page!";
+            model.addAttribute("message", message);
+
+        }
+
+        return "403Page";
+    }
+
 }
