@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -42,6 +44,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/notProtected").permitAll()
                 .antMatchers("/adminPage").hasRole("ADMIN")
                 .antMatchers("/userPage").hasRole("USER")
+                .and()
+                .formLogin().loginPage("/loginPage.jsp").successForwardUrl("/userPage")
                 .and()
                 .httpBasic();
     }
